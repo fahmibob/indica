@@ -109,7 +109,7 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 ## Institution
 
 **Universitas Brawijaya**  
-PS SMONAGENES — Sains dan Manajemen Genomik Fungsional  
+PS SMONAGENES — Pusat Studi Molekul Cerdas dari Sumber Genetik Alami (Smart Molecule of Natural Genetics Resource)  
 AI CENTER — Artificial Intelligence Research Center
 
 > **Disclaimer:** INDICA is a research prototype (TRL 4–6). Data is automatically extracted using NLP/AI and may contain errors. Always verify findings with the original PubMed article via the PMID link. For research use only.

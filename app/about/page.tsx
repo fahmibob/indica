@@ -137,7 +137,7 @@ export default function AboutPage() {
         </div>
         <div className="bg-gray-50 rounded-xl border border-gray-200 p-5 text-sm text-gray-700 space-y-1.5">
           <p className="font-bold text-base text-gray-900">Universitas Brawijaya</p>
-          <p>PS SMONAGENES — Sains dan Manajemen Genomik Fungsional</p>
+          <p>PS SMONAGENES — Pusat Studi Molekul Cerdas dari Sumber Genetik Alami (Smart Molecule of Natural Genetics Resource)</p>
           <p>AI CENTER — Artificial Intelligence Research Center</p>
           <p className="text-gray-400 pt-2 text-xs">TRL 4–6 Prototype · For research use only</p>
         </div>
