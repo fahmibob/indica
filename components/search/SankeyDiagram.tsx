@@ -306,7 +306,7 @@ export default function SankeyDiagram({ records }: { records: PhytoRecord[] }) {
     const str = new XMLSerializer().serializeToString(clone);
     const a   = Object.assign(document.createElement('a'), {
       href: URL.createObjectURL(new Blob([str], { type: 'image/svg+xml;charset=utf-8' })),
-      download: 'indica_sankey.svg',
+      download: 'neuphillm_sankey.svg',
     });
     a.click();
     URL.revokeObjectURL(a.href);

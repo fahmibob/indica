@@ -12,7 +12,8 @@ export function search(params: SearchParams): SearchResult {
   if (params.query) {
     const q = norm(params.query);
     records = records.filter((r) =>
-      Object.values(r).some((v) => v && norm(String(v)).includes(q))
+      [r.species, r.family, r.pmid, r.compound, r.gene, r.disease, r.speciesSynonyms]
+        .some((v) => v && norm(String(v)).includes(q))
     );
   }
 
@@ -20,7 +21,14 @@ export function search(params: SearchParams): SearchResult {
 
   if (params.species) {
     const s = norm(params.species);
-    filters.push((r) => norm(r.species).includes(s));
+    filters.push((r) =>
+      norm(r.species).includes(s) ||
+      (!!r.speciesSynonyms && norm(r.speciesSynonyms).includes(s))
+    );
+  }
+  if (params.synonym) {
+    const s = norm(params.synonym);
+    filters.push((r) => !!r.speciesSynonyms && norm(r.speciesSynonyms).includes(s));
   }
   if (params.family) {
     const f = norm(params.family);
@@ -67,7 +75,6 @@ export function search(params: SearchParams): SearchResult {
     });
     return Object.entries(map)
       .sort((a, b) => b[1] - a[1])
-      .slice(0, 10)
       .map(([name, count]) => ({ name, count }));
   };
 

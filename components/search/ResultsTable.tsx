@@ -16,7 +16,6 @@ import { useRouter, useSearchParams } from 'next/navigation';
 
 const helper = createColumnHelper<PhytoRecord>();
 
-/** Build a URL that ADDS/REPLACES a single field filter, preserving all other active params */
 function useAddFilter() {
   const router = useRouter();
   const sp     = useSearchParams();
@@ -42,9 +41,28 @@ function CellBtn({ children, onClick, className }: {
   );
 }
 
-export default function ResultsTable({ records, downloadRecords }: { records: PhytoRecord[]; downloadRecords?: PhytoRecord[] }) {
-  const [sorting, setSorting] = useState<SortingState>([]);
+/** Show up to 2 synonyms inline, rest in tooltip */
+function SynonymCell({ value }: { value: string | null }) {
+  if (!value) return <span className="null-value">—</span>;
+  const syns = value.split(';').map((s) => s.trim()).filter(Boolean);
+  const preview = syns.slice(0, 2).join('; ');
+  const rest    = syns.length > 2 ? ` +${syns.length - 2} more` : '';
+  return (
+    <span
+      className="text-xs text-gray-500 italic"
+      title={syns.join('\n')}
+    >
+      {preview}
+      {rest && <span className="text-gray-400 not-italic">{rest}</span>}
+    </span>
+  );
+}
+
+export default function ResultsTable({ records, total }: { records: PhytoRecord[]; total?: number }) {
+  const [sorting, setSorting]   = useState<SortingState>([]);
+  const [downloading, setDL]    = useState(false);
   const addFilter = useAddFilter();
+  const sp        = useSearchParams();
 
   const columns = [
     helper.accessor('family', {
@@ -54,9 +72,7 @@ export default function ResultsTable({ records, downloadRecords }: { records: Ph
           <CellBtn className="family-cell" onClick={() => addFilter('family', info.getValue()!)}>
             {info.getValue()}
           </CellBtn>
-        ) : (
-          <span className="null-value">—</span>
-        ),
+        ) : <span className="null-value">—</span>,
     }),
     helper.accessor('species', {
       header: 'Species',
@@ -65,6 +81,11 @@ export default function ResultsTable({ records, downloadRecords }: { records: Ph
           {formatSpeciesName(info.getValue())}
         </CellBtn>
       ),
+    }),
+    helper.accessor('speciesSynonyms', {
+      header: 'Synonyms',
+      enableSorting: false,
+      cell: (info) => <SynonymCell value={info.getValue() ?? null} />,
     }),
     helper.accessor('pmid', {
       header: 'PMID',
@@ -87,9 +108,7 @@ export default function ResultsTable({ records, downloadRecords }: { records: Ph
           <CellBtn className="compound-cell" onClick={() => addFilter('compound', info.getValue()!)}>
             {info.getValue()}
           </CellBtn>
-        ) : (
-          <span className="null-value">—</span>
-        ),
+        ) : <span className="null-value">—</span>,
     }),
     helper.accessor('gene', {
       header: 'Gene / Protein',
@@ -98,9 +117,7 @@ export default function ResultsTable({ records, downloadRecords }: { records: Ph
           <CellBtn className="gene-cell" onClick={() => addFilter('gene', info.getValue()!)}>
             {info.getValue()}
           </CellBtn>
-        ) : (
-          <span className="null-value">—</span>
-        ),
+        ) : <span className="null-value">—</span>,
     }),
     helper.accessor('disease', {
       header: 'Disease',
@@ -109,9 +126,7 @@ export default function ResultsTable({ records, downloadRecords }: { records: Ph
           <CellBtn className="disease-cell" onClick={() => addFilter('disease', info.getValue()!)}>
             {info.getValue()}
           </CellBtn>
-        ) : (
-          <span className="null-value">—</span>
-        ),
+        ) : <span className="null-value">—</span>,
     }),
   ];
 
@@ -124,21 +139,34 @@ export default function ResultsTable({ records, downloadRecords }: { records: Ph
     getSortedRowModel: getSortedRowModel(),
   });
 
-  const downloadCSV = useCallback(() => {
-    const headers = ['family', 'species', 'pmid', 'compound', 'gene', 'disease'];
-    const rows = (downloadRecords ?? records).map((r) =>
-      [r.family, formatSpeciesName(r.species), r.pmid, r.compound, r.gene, r.disease]
-        .map((v) => (v == null ? '' : `"${String(v).replace(/"/g, '""')}"`))
-        .join(',')
-    );
-    const csv = [headers.join(','), ...rows].join('\n');
-    const a   = Object.assign(document.createElement('a'), {
-      href: URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' })),
-      download: 'indica_results.csv',
-    });
-    a.click();
-    URL.revokeObjectURL(a.href);
-  }, [records]);
+  // Fetch ALL filtered rows fresh on click — never depends on paged state
+  const downloadCSV = useCallback(async () => {
+    setDL(true);
+    try {
+      const allSp = new URLSearchParams(sp.toString());
+      allSp.set('pageSize', '99999');
+      allSp.set('page', '1');
+      const res  = await fetch(`/api/search?${allSp.toString()}`);
+      const data = await res.json();
+      const rows: PhytoRecord[] = data.records;
+
+      const headers = ['family', 'species', 'synonyms', 'pmid', 'compound', 'gene', 'disease'];
+      const csvRows = rows.map((r) =>
+        [r.family, formatSpeciesName(r.species), r.speciesSynonyms, r.pmid, r.compound, r.gene, r.disease]
+          .map((v) => (v == null ? '' : `"${String(v).replace(/"/g, '""')}"`))
+          .join(',')
+      );
+      const csv = [headers.join(','), ...csvRows].join('\n');
+      const a   = Object.assign(document.createElement('a'), {
+        href: URL.createObjectURL(new Blob([csv], { type: 'text/csv;charset=utf-8;' })),
+        download: 'neuphillm_results.csv',
+      });
+      a.click();
+      URL.revokeObjectURL(a.href);
+    } finally {
+      setDL(false);
+    }
+  }, [sp]);
 
   if (records.length === 0) {
     return <div className="text-center py-12 text-gray-400 text-sm">No results found.</div>;
@@ -149,10 +177,11 @@ export default function ResultsTable({ records, downloadRecords }: { records: Ph
       <div className="flex justify-end mb-2">
         <button
           onClick={downloadCSV}
-          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600 transition-colors"
+          disabled={downloading}
+          className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-medium border border-gray-200 rounded-lg hover:bg-gray-50 text-gray-600 transition-colors disabled:opacity-50"
         >
           <Download size={13} />
-          Download CSV ({(downloadRecords ?? records).length})
+          {downloading ? 'Preparing…' : `Download CSV (${total ?? records.length})`}
         </button>
       </div>
 

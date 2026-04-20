@@ -7,8 +7,8 @@ let _cache: PhytoRecord[] | null = null;
 export function getAllRecords(): PhytoRecord[] {
   if (_cache) return _cache;
 
-  // Use triplets_clean.tsv which has family field and proper species names
-  // Columns: species, family, pmid, compound, compound_id, gene, gene_id, disease, disease_id, np_gene_rel, gene_disease_rel
+  // Columns: species(0), family(1), pmid(2), compound(3), compound_id(4,skip), gene(5), gene_id(6,skip),
+  //          disease(7), disease_id(8,skip), np_gene_rel(9), gene_disease_rel(10), species_text(11,skip), species_synonyms(12)
   const filePath = path.join(process.cwd(), 'public/data/triplets_clean.tsv');
   const raw = fs.readFileSync(filePath, 'utf-8');
   const lines = raw.trim().split('\n');
@@ -27,8 +27,10 @@ export function getAllRecords(): PhytoRecord[] {
       // cols[6] = gene_id (skip)
       disease:       toNull(cols[7]),
       // cols[8] = disease_id (skip)
-      npGeneRel:     toNull(cols[9]),
-      geneDiseaseRel: toNull(cols[10]),
+      npGeneRel:        toNull(cols[9]),
+      geneDiseaseRel:   toNull(cols[10]),
+      // cols[11] = species_text (skip)
+      speciesSynonyms:  toNull(cols[12]),
     };
   });
 

@@ -47,7 +47,7 @@ export default function HelpPage() {
         >
           Help & Documentation
         </h1>
-        <p className="text-sm text-gray-500">INDICA Database — User Guide</p>
+        <p className="text-sm text-gray-500">NeuPhiLLM Database — User Guide</p>
       </div>
 
       <section>

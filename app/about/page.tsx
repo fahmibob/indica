@@ -3,11 +3,11 @@ import Link from 'next/link';
 
 export default function AboutPage() {
   const pipeline = [
-    { label: 'PubMed', sub: '~8,900 abstracts\n2010–2025' },
+    { label: 'PubMed', sub: '~2,323 abstracts\n2010–2026' },
     { label: 'NER', sub: 'PubTator Central\nEntity tagging' },
     { label: 'Relation Extraction', sub: 'BioBERT · BioM-ELECTRA\nPubMedBERT on DrugProt+BioRED' },
     { label: 'Normalization', sub: 'Species · MeSH\nGene IDs' },
-    { label: 'INDICA DB', sub: 'Web interface\n+ Download' },
+    { label: 'NeuPhiLLM DB', sub: 'Web interface\n+ Download' },
   ];
 
   return (
@@ -17,7 +17,7 @@ export default function AboutPage() {
       <div className="mb-8 flex gap-3 bg-amber-50 border border-amber-200 rounded-xl p-4 text-sm text-amber-800">
         <AlertTriangle size={16} className="shrink-0 mt-0.5" />
         <div>
-          <strong>Beta Notice</strong> — INDICA is an active research prototype (TRL 4–6).
+          <strong>Beta Notice</strong> — NeuPhiLLM is an active research prototype (TRL 4–6).
           The data is automatically extracted using NLP/AI and may contain errors.
           Always verify findings with the original literature via PMID links.
         </div>
@@ -28,7 +28,7 @@ export default function AboutPage() {
         className="text-3xl sm:text-4xl font-bold mb-2"
         style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-poppins), Poppins, sans-serif' }}
       >
-        About INDICA
+        About NeuPhiLLM
       </h1>
       <p className="text-gray-500 mb-1 text-sm font-medium">
         A Database of Indonesian Medicinal Plants, Phytochemical Compounds, and Anticancer
@@ -45,7 +45,7 @@ export default function AboutPage() {
           </h2>
         </div>
         <p className="text-gray-700 leading-relaxed text-sm">
-          INDICA provides a structured, searchable knowledge base linking Indonesian medicinal
+          NeuPhiLLM provides a structured, searchable knowledge base linking Indonesian medicinal
           plant species and their bioactive compounds to molecular targets (genes/proteins)
           and cancer diseases — enabling systematic phytopharmaca drug discovery research.
           All knowledge is automatically extracted from PubMed biomedical literature using
@@ -112,7 +112,7 @@ export default function AboutPage() {
           {[
             { label: 'Records', value: '~5,975' },
             { label: 'PubMed Articles', value: '~2,500+' },
-            { label: 'Literature Years', value: '2010–2025' },
+            { label: 'Literature Years', value: '2010–2026' },
             { label: 'Relationship Types', value: '12 types' },
             { label: 'Data Version', value: '0.1 β' },
             { label: 'Last Updated', value: 'April 2026' },

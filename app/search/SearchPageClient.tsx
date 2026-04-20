@@ -253,7 +253,7 @@ export default function SearchPageClient() {
             </div>
           ) : view === 'table' ? (
             <>
-              <ResultsTable records={result?.records ?? []} downloadRecords={allRecords} />
+              <ResultsTable records={result?.records ?? []} total={result?.total} />
 
               {/* Pagination */}
               {totalPages > 1 && (

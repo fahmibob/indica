@@ -7,6 +7,7 @@ export interface PhytoRecord {
   disease: string | null;
   npGeneRel: string | null;
   geneDiseaseRel: string | null;
+  speciesSynonyms: string | null;
 }
 
 export interface SearchParams {
@@ -17,6 +18,7 @@ export interface SearchParams {
   disease?: string;
   compound?: string;
   pmid?: string;
+  synonym?: string;
   logic?: 'AND' | 'OR';
   page?: number;
   pageSize?: number;

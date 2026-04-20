@@ -18,12 +18,12 @@ const poppins = Poppins({
 });
 
 export const metadata: Metadata = {
-  title: 'INDICA — Database of Indonesian Medicinal Plants & Anticancer Activities',
+  title: 'NeuPhiLLM — Database of Indonesian Medicinal Plants & Anticancer Activities',
   description:
-    'INDICA: A Database of Indonesian Medicinal Plants, Phytochemical Compounds, and Anticancer Activities Extracted from Biomedical Literature. Search species, compounds, genes, and diseases from PubMed.',
+    'NeuPhiLLM: A Database of Indonesian Medicinal Plants, Phytochemical Compounds, and Anticancer Activities Extracted from Biomedical Literature. Search species, compounds, genes, and diseases from PubMed.',
   keywords: [
     'Indonesian medicinal plants', 'anticancer', 'phytochemicals', 'bioinformatics',
-    'NLP', 'PubMed', 'drug discovery', 'INDICA',
+    'NLP', 'PubMed', 'drug discovery', 'NeuPhiLLM',
   ],
 };
 

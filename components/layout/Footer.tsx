@@ -1,4 +1,4 @@
-import { FlaskConical } from 'lucide-react';
+import Image from 'next/image';
 
 export default function Footer() {
   return (
@@ -8,19 +8,14 @@ export default function Footer() {
 
           {/* Brand */}
           <div className="flex items-start gap-3">
-            <div
-              className="w-9 h-9 rounded-lg flex items-center justify-center shadow-sm shrink-0 mt-0.5"
-              style={{ background: 'linear-gradient(135deg, #1b4332, #2d6a4f)' }}
-            >
-              <FlaskConical size={18} className="text-white" />
-            </div>
+            <Image src="/logo.png" alt="NeuPhiLLM logo" width={36} height={36} className="rounded-lg shrink-0 mt-0.5" />
             <div>
               <div className="flex items-center gap-2">
                 <span
                   className="font-bold text-base"
                   style={{ fontFamily: 'var(--font-poppins), Poppins, sans-serif', color: 'var(--color-primary)' }}
                 >
-                  INDICA
+                  NeuPhiLLM
                 </span>
                 <span className="beta-badge">β BETA</span>
               </div>
@@ -36,13 +31,13 @@ export default function Footer() {
             <p className="text-xs font-semibold text-gray-700">Universitas Brawijaya</p>
             <p className="text-xs text-gray-500 mt-0.5">PS SMONAGENES · AI CENTER</p>
             <p className="text-xs text-gray-400 mt-1">
-              Literature: 2010–2025 · Last updated: April 2026
+              Literature: 2010–2026 · Last updated: April 2026
             </p>
           </div>
         </div>
 
         <div className="mt-6 pt-4 border-t border-gray-100 flex flex-col sm:flex-row items-center justify-between gap-2 text-xs text-gray-400">
-          <p>© 2026 INDICA Database. Data extracted from PubMed using NLP/AI pipelines.</p>
+          <p>© 2026 NeuPhiLLM Database. Data extracted from PubMed using NLP/AI pipelines.</p>
           <p className="italic">For research use only. Not for clinical decision-making.</p>
         </div>
       </div>

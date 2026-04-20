@@ -13,7 +13,7 @@ export default function HomePage() {
         <div className="max-w-7xl mx-auto flex items-center gap-2 text-sm text-amber-800">
           <AlertTriangle size={14} className="shrink-0" />
           <span>
-            <strong>Beta version</strong> — INDICA is under active development. Data may be incomplete or contain extraction errors.
+            <strong>Beta version</strong> — NeuPhiLLM is under active development. Data may be incomplete or contain extraction errors.
             <Link href="/about" className="ml-2 underline font-medium hover:text-amber-900">Learn more</Link>
           </span>
         </div>
@@ -38,14 +38,14 @@ export default function HomePage() {
           <h1
             className="hero-title text-4xl sm:text-5xl mb-4 text-white"
           >
-            INDICA
+            NeuPhiLLM
           </h1>
           <p className="text-green-100 text-base sm:text-lg font-medium max-w-2xl mx-auto leading-relaxed mb-2">
             A Database of Indonesian Medicinal Plants, Phytochemical Compounds,
             and Anticancer Activities
           </p>
           <p className="text-green-200/70 text-sm max-w-xl mx-auto">
-            Extracted from Biomedical Literature via NLP · ~5,975 records · PubMed 2010–2025
+            Extracted from Biomedical Literature via NLP · ~8,803 records · PubMed 2010–2026
           </p>
         </div>
 
@@ -114,12 +114,12 @@ export default function HomePage() {
           <div className="flex items-center justify-center gap-2 mb-3">
             <BookOpen size={18} style={{ color: 'var(--color-primary)' }} />
             <h2 className="text-base font-semibold" style={{ color: 'var(--color-primary)', fontFamily: 'var(--font-poppins), Poppins' }}>
-              About INDICA
+              About NeuPhiLLM
             </h2>
           </div>
           <p className="text-sm text-gray-600 leading-relaxed max-w-xl mx-auto">
-            INDICA maps biomedical anticancer knowledge of Indonesian medicinal plants extracted
-            from ~8,900 PubMed records (2010–2025) using NLP pipelines (BioBERT, PubTator, DrugProt).
+            NeuPhiLLM maps biomedical anticancer knowledge of Indonesian medicinal plants extracted
+            from ~2,323 PubMed records (2010–2026) using NLP pipelines (BioBERT, PubTator, DrugProt).
             It covers relationships between plant species, bioactive compounds, genes/proteins,
             and cancer diseases.
           </p>

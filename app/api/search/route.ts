@@ -12,6 +12,7 @@ export async function GET(req: NextRequest) {
     disease:  params.disease  || undefined,
     compound: params.compound || undefined,
     pmid:     params.pmid     || undefined,
+    synonym:  params.synonym  || undefined,
     logic:    (params.logic as 'AND' | 'OR') || 'AND',
     page:     parseInt(params.page     || '1'),
     pageSize: parseInt(params.pageSize || '10'),

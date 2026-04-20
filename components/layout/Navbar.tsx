@@ -23,13 +23,13 @@ export default function Navbar() {
 
         {/* Logo + Name */}
         <Link href="/" className="flex items-center gap-2.5 shrink-0 group">
-          <Image src="/logo.png" alt="INDICA logo" width={64} height={64} className="rounded-lg" />
+          <Image src="/logo.png" alt="NeuPhiLLM logo" width={64} height={64} className="rounded-lg" />
           <div className="flex flex-col leading-tight">
             <span
               className="font-bold text-base tracking-tight"
               style={{ fontFamily: 'var(--font-poppins), Poppins, sans-serif', color: 'var(--color-primary)' }}
             >
-              INDICA
+              NeuPhiLLM
             </span>
             <span className="text-[10px] text-gray-400 font-medium hidden sm:block" style={{ marginTop: '-1px' }}>
               Medicinal Plant Database

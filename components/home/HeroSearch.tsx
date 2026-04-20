@@ -90,9 +90,9 @@ export default function HeroSearch() {
   const ringStyle = { '--tw-ring-color': 'var(--color-primary-light)' } as React.CSSProperties;
 
   return (
-    <div className="bg-white rounded-2xl shadow-lg border border-gray-100 overflow-hidden">
-      {/* Tabs */}
-      <div className="flex border-b border-gray-100">
+    <div className="bg-white rounded-2xl shadow-lg border border-gray-100">
+      {/* Tabs — overflow-hidden here only so active tab bg respects rounded corners */}
+      <div className="flex border-b border-gray-100 rounded-t-2xl overflow-hidden">
         {(['simple', 'advanced'] as const).map((t) => (
           <button
             key={t}
@@ -126,7 +126,7 @@ export default function HeroSearch() {
                 />
                 {/* Autocomplete dropdown */}
                 {showSug && suggestions.length > 0 && (
-                  <ul className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-20 max-h-52 overflow-y-auto text-sm">
+                  <ul className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-y-auto text-sm" style={{ maxHeight: '9rem' }}>
                     {suggestions.map((s) => (
                       <li key={s}>
                         <button
