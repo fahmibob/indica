@@ -3,6 +3,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/navigation';
 import { Search, Plus, X, ChevronDown } from 'lucide-react';
+import { formatSpeciesName } from '@/lib/format';
 
 type FieldOption = { value: string; label: string };
 
@@ -31,7 +32,7 @@ export default function HeroSearch() {
     { id: 1, field: 'species', value: '' },
   ]);
   const [logic, setLogic] = useState<'AND' | 'OR'>('AND');
-  const [suggestions, setSuggestions] = useState<string[]>([]);
+  const [suggestions, setSuggestions] = useState<Array<{ text: string; field: string }>>([]);
   const [showSug, setShowSug] = useState(false);
   const sugTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
 
@@ -128,13 +129,13 @@ export default function HeroSearch() {
                 {showSug && suggestions.length > 0 && (
                   <ul className="absolute top-full left-0 right-0 mt-1 bg-white border border-gray-200 rounded-lg shadow-lg z-50 overflow-y-auto text-sm" style={{ maxHeight: '9rem' }}>
                     {suggestions.map((s) => (
-                      <li key={s}>
+                      <li key={s.text}>
                         <button
                           type="button"
-                          onMouseDown={() => { setQuery(s); setShowSug(false); }}
+                          onMouseDown={() => { setQuery(s.text); setShowSug(false); }}
                           className="w-full text-left px-3 py-2 hover:bg-gray-50 transition-colors"
                         >
-                          {s}
+                          {s.field === 'species' ? formatSpeciesName(s.text) : s.text}
                         </button>
                       </li>
                     ))}

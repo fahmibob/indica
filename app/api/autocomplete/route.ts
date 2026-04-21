@@ -12,7 +12,7 @@ export async function GET(req: NextRequest) {
 
   const records = getAllRecords();
   const seen = new Set<string>();
-  const results: string[] = [];
+  const results: Array<{ text: string; field: string }> = [];
 
   const fields = field ? [field] : SUGGESTION_FIELDS;
 
@@ -23,7 +23,7 @@ export async function GET(req: NextRequest) {
         const norm = String(v).toLowerCase();
         if (norm.startsWith(q) || norm.includes(q)) {
           seen.add(String(v));
-          results.push(String(v));
+          results.push({ text: String(v), field: f });
           if (results.length >= 12) break;
         }
       }
@@ -33,7 +33,7 @@ export async function GET(req: NextRequest) {
 
   // Sort: starts-with first
   results.sort((a, b) => {
-    const al = a.toLowerCase(), bl = b.toLowerCase();
+    const al = a.text.toLowerCase(), bl = b.text.toLowerCase();
     return (al.startsWith(q) ? 0 : 1) - (bl.startsWith(q) ? 0 : 1);
   });
 
